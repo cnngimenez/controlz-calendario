@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Calendario</title>
+    <meta content="Calendario de la UNCo" name="description">
+    <meta content="UNCo calendario" name="keywords">
+
+    <link href="assets/img/favico.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://www.unpkg.com/dhtmlx-scheduler@6.0.4/codebase/dhtmlxscheduler_material.css"
+          integrity="sha384-Nn0Cbv5jl4N91I0uIsX1REmNIcYO9yL5MvTV7D7DIltZNCZZ5Q+xvaMLFfm9gw/d" crossorigin="anonymous"
+          type="text/css" charset="utf-8">
+  </head>
+  <body>
+    <!--
+         By default AOS hides everything it affects, which is problematic when JS is disabled
+         for any reason the user may have (and yes, I sometimes disable JS too!).
+         This noscript fixes that showing all when JS is disabled.
+    -->
+    <noscript>
+      <style>
+       [data-aos] {
+           visibility: visible !important;
+           opacity: 1 !important;
+           transform: none !important; }
+      </style>
+    </noscript>
+
+    <div class="container">
+      <h1>Calendario UNCo - FaI</h1>
+      <div id="scheduler" class="dhx_cal_container" style='width:100%; height:100vh;'>
+	    <div class="dhx_cal_navline">
+		  <div class="dhx_cal_prev_button">&nbsp;</div>
+		  <div class="dhx_cal_next_button">&nbsp;</div>
+		  <div class="dhx_cal_today_button"></div>
+		  <div class="dhx_cal_date"></div>
+		  <div class="dhx_cal_tab" data-tab="day"></div>
+		  <div class="dhx_cal_tab" data-tab="week"></div>
+		  <div class="dhx_cal_tab" data-tab="month"></div>
+	    </div>
+	    <div class="dhx_cal_header"></div>
+	    <div class="dhx_cal_data"></div>
+      </div>
+
+      <h1>¿De dónde se obtienen los datos?</h1>
+      <p>Los datos se obtienen de: </p>
+      <ul>
+        <li>
+          <a href="https://drive.google.com/drive/folders/1A80pQQEbnkqyK6oR01IiPqNa2w0b1xEl">
+            Res. Dec. FaI 311/22
+          </a>
+        </li>
+        <li>
+          <a href="https://ranquel.uncoma.edu.ar/aplicacion.php?ah=st648ceacd5419d7.11805081&ai=ranquel%7C%7C3745">
+            Res. CS. 0137/2022
+          </a>
+        </li>
+        <li>
+          <a href="https://www.argentina.gob.ar/interior/feriados-nacionales-2023">
+            Página de Feriados Nacionales
+          </a>
+        </li>
+      </ul>
+    </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+    <script src="https://www.unpkg.com/dhtmlx-scheduler@6.0.4/codebase/dhtmlxscheduler.js"
+            integrity="sha384-JhovDqDEEY7kyIVFiJf4Idlfe3Rd3NCneOENd3JinLKMfAmsgffKaLKzL7eyAhS0"
+            crossorigin="anonymous"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
