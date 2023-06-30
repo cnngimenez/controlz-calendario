@@ -1,3 +1,5 @@
+Se utiliza un único JSON (eventos.json) para reducir la carga de la página.
+
 - eventos.json: Generado a partir de la mezcla de los demás JSON. Es la salida del script ../scripts/generar_eventos.php
 - fai.json: Generado a partir de la Res. Dec. FaI 311/22
 - cs.json: Generado a partir de la Res. CS. 0137/2022

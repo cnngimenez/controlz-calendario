@@ -18,8 +18,35 @@
 */
 
 
-scheduler.config.first_hour = 6;
-scheduler.config.last_hour = 19;
-scheduler.init('scheduler', new Date(), "month");
+function configurar_scheduler() {
+    scheduler.config.first_hour = 6;
+    scheduler.config.last_hour = 19;
+    scheduler.init('scheduler', new Date(), "month");
+}
 
-scheduler.parse(data);
+function obtener_datos(callback) {
+    fetch('data/eventos.json').then( (response) => {
+        response.json().then( (data) => {
+            console.log('Data:');
+            console.log(data);
+            callback(data);
+        });
+    });
+}
+
+function actualizar_datos(){
+    obtener_datos((data) => {
+        scheduler.parse(data);
+    });
+}
+
+function startup() {
+    configurar_scheduler();
+    actualizar_datos();
+}
+
+if (document.readyState !== 'loading') {
+    startup();
+} else {
+    document.addEventListener('DOMContentLoaded', startup);
+}
