@@ -17,10 +17,26 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 function configurar_scheduler() {
+    // scheduler.config.readonly = true;
+    scheduler.config.readonly_form = true;
     scheduler.config.first_hour = 6;
     scheduler.config.last_hour = 19;
+    scheduler.i18n.setLocale("es");
+    scheduler.plugins({
+        tooltip: true,
+        readonly: true,
+        agenda_view: true,
+        year_view: true
+    });
+    scheduler.locale.labels.agenda_tab="Agenda";
+    var format = scheduler.date.date_to_str("%d/%m/%Y %H:%i"); 
+    scheduler.templates.tooltip_text = function(start,end,event) {
+        return "<b>Evento:</b> " + event.text +
+            "<br/><b>Comienzo:</b> " + format(start) +
+            "<br/><b>Fin:</b> " + format(end);
+    };
+
     scheduler.init('scheduler', new Date(), "month");
 }
 
