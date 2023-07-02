@@ -1,5 +1,62 @@
-[{
-    "start": "10/07/2023",
-    "end": "24/07/2023",
-    "text": "Receso académico"
-}]
+[
+    {
+        "start": "02/01/2023",
+        "end": "31/01/2023",
+        "text": "Receso"
+    },
+    {
+        "start": "15/05/2023",
+        "end": "15/05/2023",
+        "text": "Día de las y los docentes universitarios"
+    },
+    {
+        "start": "23/06/2023",
+        "end": "24/06/2023",
+        "text": "Wiñoy Xipantu"
+    },        
+    {
+        "start": "21/09/2023",
+        "end": "21/09/2023",
+        "text": "Día del estudiantado"
+    },
+    {
+        "text": "Inicio de clases del Primer Cuatrimestre",
+        "start": "13/03/2023",
+        "end": "13/03/2023"
+    },
+    {
+        "text": "Fecha tope de presentación en Secretaría Académica y publicación en PEDCO de programas de asignaturas del Primer Cuatrimestre",
+        "start": "14/04/2023",
+        "end": "14/04/2023"
+    },
+    {
+        "text": "Turnos de Exámenes Extraordinarios Primer Cuatrimestre (a demanda)",
+        "start": "01/04/2023",
+        "end": "09/06/2023"
+    },
+    {
+        "text": "Finalización del Primer Cuatrimestre *",
+        "start": "30/06/2023",
+        "end": "30/06/2023"
+    },
+    {
+        "start": "10/07/2023",
+        "end": "24/07/2023",
+        "text": "Receso académico (15 días)"
+    },
+    {
+        "text": "Inicio de clases del Segundo Cuatrimestre",
+        "start": "07/08/2023",
+        "end": "07/08/2023"
+    },
+    {
+        "text": "Fecha tope de presentación en Secretaría Académwca y publicación en PEDCO de programas de asignaturas del Segundo Cuatrimestre",
+        "start": "15/09/2023",
+        "end": "15/09/2023"
+    },
+    {
+        "text": "Finalización del Segundo Cuatrimestre",
+        "start": "24/11/2023",
+        "end": "24/11/2023"
+    }
+]

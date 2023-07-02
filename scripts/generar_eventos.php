@@ -60,6 +60,8 @@ Agrega cada entrada a la variable $eventos.
 
 @param $path   String El path del archivo a parsear.
 @param $colour String El color para los eventos.
+
+@return No hay retorno. Solo side-effect en $eventos y $last_id.
  */
 function parse_own_format($path, $colour)
 {
@@ -70,15 +72,14 @@ function parse_own_format($path, $colour)
     foreach ($fai as $ev) {
         $start = to_scheduler_date($ev['start']);
         $ends =  to_scheduler_date($ev['end']);
-        $eventos[] =
-            [
-                'id' => $last_id,
-                'text' => $ev['text'],
-                'start_date' => $start,
-                'end_date' => $ends,
-                'color' => $colour,
-                'textColor' => 'white'
-            ];
+        $eventos[] = [
+            'id' => $last_id,
+            'text' => $ev['text'],
+            'start_date' => $start,
+            'end_date' => $ends,
+            'color' => $colour,
+            'textColor' => 'white'
+        ];
     
         $last_id += 1;        
     }
@@ -87,6 +88,9 @@ function parse_own_format($path, $colour)
 // Anexar fai.json
 echo "Parsing fai.json...\n";
 parse_own_format('www/data/fai.json', 'blue');
+
+echo "Parsing fai-periodos.json...\n";
+parse_own_format('www/data/fai-periodos.json', 'cyan');
 
 // Anexar cs.json
 echo "Parsing cs.json...\n";
