@@ -24,6 +24,7 @@ var mostrar_tipos = {};
 
 function configurar_scheduler() {
     // scheduler.config.readonly = true;
+    scheduler.config.readonly = true;
     scheduler.config.readonly_form = true;
     scheduler.config.first_hour = 6;
     scheduler.config.last_hour = 19;
