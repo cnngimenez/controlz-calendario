@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://www.unpkg.com/dhtmlx-scheduler@6.0.4/codebase/dhtmlxscheduler_material.css"
           integrity="sha384-Nn0Cbv5jl4N91I0uIsX1REmNIcYO9yL5MvTV7D7DIltZNCZZ5Q+xvaMLFfm9gw/d" crossorigin="anonymous"
           type="text/css" charset="utf-8">
+
+    <link rel="stylesheet" href="css/index.css" type="text/css" charset="utf-8">
   </head>
   <body>
     <!--
@@ -32,99 +34,105 @@
       </style>
     </noscript>
 
-    <div class="container">
-      <h1>Calendario UNCo - FaI</h1>
+    <main>
+      <div class="container">
+        <h1>Calendario UNCo - FaI</h1>
 
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-nacional" checked>
-        <label class="form-check-label" for="chk-nacional">
-          Mostrar eventos Nacionales
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-cs" checked>
-        <label class="form-check-label" for="chk-cs">
-          Mostrar eventos del Consejo Superior
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-fai" checked>
-        <label class="form-check-label" for="chk-fai">
-          Mostrar eventos de la Facultad de Informática
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-fai-periodos" checked>
-        <label class="form-check-label" for="chk-fai-periodos">
-          Mostrar periodos de la FaI
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-radio" checked>
-        <label class="form-check-label" for="chk-radio">
-          Radio
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-controlz" checked>
-        <label class="form-check-label" for="chk-controlz">
-          Entrevistas realizadas en Control Z
-        </label>
-      </div>
-            
-      <div id="scheduler" class="dhx_cal_container" style='width:100%; height:100vh;'>
-        <div class="dhx_cal_navline">
-		  <div class="dhx_cal_prev_button"></div>
-		  <div class="dhx_cal_next_button"></div>
-		  <div class="dhx_cal_today_button"></div>
-		  <div class="dhx_cal_date"></div>
-		  <div class="dhx_cal_tab" data-tab="day"></div>
-		  <div class="dhx_cal_tab" data-tab="week"></div>
-		  <div class="dhx_cal_tab" data-tab="agenda"></div>
-		  <div class="dhx_cal_tab" data-tab="month"></div>
-          <div class="dhx_cal_tab" data-tab="year"></div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-nacional" checked>
+          <label class="form-check-label" for="chk-nacional">
+            Mostrar eventos Nacionales
+          </label>
         </div>
-        <div class="dhx_cal_header"></div>
-	    <div class="dhx_cal_data"></div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-cs" checked>
+          <label class="form-check-label" for="chk-cs">
+            Mostrar eventos del Consejo Superior
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-fai" checked>
+          <label class="form-check-label" for="chk-fai">
+            Mostrar eventos de la Facultad de Informática
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-fai-periodos" checked>
+          <label class="form-check-label" for="chk-fai-periodos">
+            Mostrar periodos de la FaI
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-radio" checked>
+          <label class="form-check-label" for="chk-radio">
+            Radio
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-controlz" checked>
+          <label class="form-check-label" for="chk-controlz">
+            Entrevistas realizadas en Control Z
+          </label>
+        </div>
+        
+        <div id="scheduler" class="dhx_cal_container" style='width:100%; height:100vh;'>
+          <div class="dhx_cal_navline">
+		    <div class="dhx_cal_prev_button"></div>
+		    <div class="dhx_cal_next_button"></div>
+		    <div class="dhx_cal_today_button"></div>
+		    <div class="dhx_cal_date"></div>
+		    <div class="dhx_cal_tab" data-tab="day"></div>
+		    <div class="dhx_cal_tab" data-tab="week"></div>
+		    <div class="dhx_cal_tab" data-tab="agenda"></div>
+		    <div class="dhx_cal_tab" data-tab="month"></div>
+            <div class="dhx_cal_tab" data-tab="year"></div>
+          </div>
+          <div class="dhx_cal_header"></div>
+	      <div class="dhx_cal_data"></div>
+        </div>
+
+        <h1>¿De dónde se obtienen los datos?</h1>
+        <p>Los datos se obtienen de: </p>
+        <ul>
+          <li>
+            <a href="https://drive.google.com/drive/folders/1A80pQQEbnkqyK6oR01IiPqNa2w0b1xEl">
+              Res. Dec. FaI 311/22
+            </a>
+          </li>
+          <li>
+            <a href="https://ranquel.uncoma.edu.ar/aplicacion.php?ah=st648ceacd5419d7.11805081&ai=ranquel%7C%7C3745">
+              Res. CS. 0137/2022
+            </a>
+          </li>
+          <li>
+            <a href="https://www.argentina.gob.ar/interior/feriados-nacionales-2023">
+              Página de Feriados Nacionales
+            </a>
+          </li>
+        </ul>
+
       </div>
+    </main>
+    <footer>
+      <div class="container">
+        <h1>Licencia y Código Fuente</h1>
+        <p>Este software se encuentra bajo la licencia Aferro General Public License versión 3.0.
 
-      <h1>¿De dónde se obtienen los datos?</h1>
-      <p>Los datos se obtienen de: </p>
-      <ul>
-        <li>
-          <a href="https://drive.google.com/drive/folders/1A80pQQEbnkqyK6oR01IiPqNa2w0b1xEl">
-            Res. Dec. FaI 311/22
+          Para más información, visite:
+
+          <a href="https://www.gnu.org/licenses/agpl-3.0.html">
+            https://www.gnu.org/licenses/agpl-3.0.html
           </a>
-        </li>
-        <li>
-          <a href="https://ranquel.uncoma.edu.ar/aplicacion.php?ah=st648ceacd5419d7.11805081&ai=ranquel%7C%7C3745">
-            Res. CS. 0137/2022
+        </p>
+        <p>
+          El código fuente se encuentra público:
+          <a href="https://github.com/cnngimenez/controlz-calendario">
+            Ver repositorio.
           </a>
-        </li>
-        <li>
-          <a href="https://www.argentina.gob.ar/interior/feriados-nacionales-2023">
-            Página de Feriados Nacionales
-          </a>
-        </li>
-      </ul>
-
-      <h1>Licencia y Código Fuente</h1>
-      <p>Este software se encuentra bajo la licencia Aferro General Public License versión 3.0.
-
-        Para más información, visite:
-
-        <a href="https://www.gnu.org/licenses/agpl-3.0.html">
-        https://www.gnu.org/licenses/agpl-3.0.html
-        </a>
-      </p>
-      <p>
-        El código fuente se encuentra público:
-        <a href="https://github.com/cnngimenez/controlz-calendario">
-          Ver repositorio.
-        </a>
-      </p>
-    </div>
-   
+        </p>
+      </div>
+    </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>

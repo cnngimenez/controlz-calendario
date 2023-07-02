@@ -228,7 +228,7 @@ echo "Parsing fai.json...\n";
 parse_own_format('www/data/fai.json', 'fai', 'blue');
 
 echo "Parsing fai-periodos.json...\n";
-parse_own_format('www/data/fai-periodos.json', 'fai_periodos', 'cyan');
+parse_own_format('www/data/fai-periodos.json', 'fai_periodos', '#22a');
 
 // Anexar cs.json
 echo "Parsing cs.json...\n";
@@ -236,7 +236,7 @@ parse_own_format('www/data/cs.json', 'cs', 'brown');
 
 // Parsear nacional.json
 echo "Parsing nacional.json...\n";
-parse_nacional_format('www/data/nacional.json', 'red');
+parse_nacional_format('www/data/nacional.json', '#a22');
 
 // Escribir salida:
 echo "Escribiendo salida a eventos.json...\n";
