@@ -85,6 +85,24 @@ function parse_own_format($path, $colour)
     }
 }
 
+function parse_nacional_format($path, $colour)
+{
+    $nacional_str = file_get_contents($path, 'r');
+    $nacional = json_decode($nacional_str, true);
+    foreach ($nacional as $ev) {
+        $fecha = to_scheduler_date($ev['date']);
+        $eventos[] = [
+            'id' => $last_id,
+            'text' => $ev['label'] . '(' . $ev['type'] . ')',
+            'start_date' => $fecha,
+            'end_date' => $fecha,
+            'color' => $color,
+            'textColor' => 'white'
+        ];
+    
+    $last_id += 1;
+}
+
 // Anexar fai.json
 echo "Parsing fai.json...\n";
 parse_own_format('www/data/fai.json', 'blue');
@@ -97,23 +115,8 @@ echo "Parsing cs.json...\n";
 parse_own_format('www/data/cs.json', 'brown');
 
 // Parsear nacional.json
-echo 'Parsing nacional.json...';
-$nacional_str = file_get_contents('www/data/nacional.json', 'r');
-$nacional = json_decode($nacional_str, true);
-foreach ($nacional as $ev) {
-    $fecha = to_scheduler_date($ev['date']);
-    $eventos[] =
-        [
-        'id' => $last_id,
-        'text' => $ev['label'] . '(' . $ev['type'] . ')',
-        'start_date' => $fecha,
-        'end_date' => $fecha,
-        'color' => 'red',
-        'textColor' => 'white'
-        ];
-    
-    $last_id += 1;    
-}
+echo "Parsing nacional.json...\n";
+parse_nacional_format('www/data/nacional.json', 'red');
 
 // Escribir salida:
 echo "Escribiendo salida a eventos.json...\n";
