@@ -59,11 +59,12 @@ El formato propio seria un JSON array como el siguiente:
 Agrega cada entrada a la variable $eventos.
 
 @param $path   String El path del archivo a parsear.
+@param $type   String El tipo de evento.
 @param $colour String El color para los eventos.
 
 @return No hay retorno. Solo side-effect en $eventos y $last_id.
  */
-function parse_own_format($path, $colour)
+function parse_own_format($path, $type, $colour)
 {
     global $eventos, $last_id;
     
@@ -75,6 +76,7 @@ function parse_own_format($path, $colour)
         if ($start && $ends) {
             $eventos[] = [
                 'id' => $last_id,
+                'type' => $type,
                 'text' => $ev['text'],
                 'start_date' => $start,
                 'end_date' => $ends,
@@ -122,6 +124,7 @@ function parse_nacional_format($path, $colour)
         if ($fecha) {
             $eventos[] = [
                 'id' => $last_id,
+                'type' => 'nacional',
                 'text' => $ev['label'] . '(' . $ev['type'] . ')',
                 'start_date' => $fecha,
                 'end_date' => $fecha,
@@ -167,6 +170,7 @@ function parse_controlz_format($path, $colour)
         if ($start) {
             $eventos[] = [
                 'id' => $last_id,
+                'type' => 'controlz',
                 'text' => "Entrevista a " . $ev['entrevistade'] . ": " .
                     $ev['tema'],
                 'start_date' => $start,
@@ -189,10 +193,11 @@ Agregar eventos directamente.
 El formato del JSON es el miso que utiliza dhtmlx-calendar.
 
 @param $path String El path del archivo a parsear.
+@param $type String El tipo de evento.
 
 @return No hay retorno. Solo side-effect en $eventos y $last_id.
  */
-function add_events($path)
+function add_events($path, $type)
 {
     global $eventos, $last_id;
     
@@ -201,6 +206,8 @@ function add_events($path)
     
     foreach ($nuevos as $ev) {
         $ev['id'] = $last_id;
+        $ev['type'] = $type;
+        
         $eventos[] = $ev;
         
         $last_id += 1;
@@ -208,23 +215,24 @@ function add_events($path)
 }
 
 echo "Parsing radio.json...\n";
-add_events('www/data/radio.json');
+add_events('www/data/radio.json', 'radio');
 
 // Agregar Control Z
 echo "Parsing entrevistas.json... \n";
 // parse_controlz_format('www/data/entrevistas.json', 'green');
-parse_controlz_format('https://controlz.fi.uncoma.edu.ar/datos/entrevistas.json', 'green');
+parse_controlz_format('https://controlz.fi.uncoma.edu.ar/datos/entrevistas.json',
+                      'green');
 
 // Anexar fai.json
 echo "Parsing fai.json...\n";
-parse_own_format('www/data/fai.json', 'blue');
+parse_own_format('www/data/fai.json', 'fai', 'blue');
 
 echo "Parsing fai-periodos.json...\n";
-parse_own_format('www/data/fai-periodos.json', 'cyan');
+parse_own_format('www/data/fai-periodos.json', 'fai_periodos', 'cyan');
 
 // Anexar cs.json
 echo "Parsing cs.json...\n";
-parse_own_format('www/data/cs.json', 'brown');
+parse_own_format('www/data/cs.json', 'cs', 'brown');
 
 // Parsear nacional.json
 echo "Parsing nacional.json...\n";
