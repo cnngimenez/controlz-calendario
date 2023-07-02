@@ -72,36 +72,148 @@ function parse_own_format($path, $colour)
     foreach ($fai as $ev) {
         $start = to_scheduler_date($ev['start']);
         $ends =  to_scheduler_date($ev['end']);
-        $eventos[] = [
-            'id' => $last_id,
-            'text' => $ev['text'],
-            'start_date' => $start,
-            'end_date' => $ends,
-            'color' => $colour,
-            'textColor' => 'white'
-        ];
-    
+        if ($start && $ends) {
+            $eventos[] = [
+                'id' => $last_id,
+                'text' => $ev['text'],
+                'start_date' => $start,
+                'end_date' => $ends,
+                'color' => $colour,
+                'textColor' => 'white'
+            ];
+        } else {
+            echo "Error: element without date: $last_id ("
+                . $ev['text'] . "). Skipping it.\n";
+        }
+        
         $last_id += 1;        
     }
 }
 
+/**
+Parsear un archivo JSON con el formato nacional.
+
+El formato utilizado por la página nacional seria un JSON array como
+el siguiente:
+```
+[
+  {
+    "date" : "25/05/2023",
+    "label" : "Revolución de mayo",
+    "type" : "inamovible"
+  }
+]
+```
+
+Agrega cada entrada a la variable $eventos.
+
+@param $path   String El path del archivo a parsear.
+@param $colour String El color para los eventos.
+
+@return No hay retorno. Solo side-effect en $eventos y $last_id.
+ */
 function parse_nacional_format($path, $colour)
 {
+    global $eventos, $last_id;
     $nacional_str = file_get_contents($path, 'r');
     $nacional = json_decode($nacional_str, true);
-    foreach ($nacional as $ev) {
+    foreach ($nacional as $ev) {        
         $fecha = to_scheduler_date($ev['date']);
-        $eventos[] = [
-            'id' => $last_id,
-            'text' => $ev['label'] . '(' . $ev['type'] . ')',
-            'start_date' => $fecha,
-            'end_date' => $fecha,
-            'color' => $color,
-            'textColor' => 'white'
-        ];
+        if ($fecha) {
+            $eventos[] = [
+                'id' => $last_id,
+                'text' => $ev['label'] . '(' . $ev['type'] . ')',
+                'start_date' => $fecha,
+                'end_date' => $fecha,
+                'color' => $colour,
+                'textColor' => 'white'
+            ];
+        } else {
+            echo "Error: element without date: $last_id ("
+                . $ev['label'] . "). Skipping it.\n";
+        }
     
-    $last_id += 1;
+        $last_id += 1;
+    }
 }
+
+/**
+Parsear un archivo JSON con el formato propio.
+
+El formato propio seria un JSON array como el siguiente:
+```
+[
+  {"start" : "25/05/2023",
+   "end" : "25/05/2023",
+   "text" : "Revolución de mayo"
+]
+```
+
+Agrega cada entrada a la variable $eventos.
+
+@param $path   String El path del archivo a parsear.
+@param $colour String El color para los eventos.
+
+@return No hay retorno. Solo side-effect en $eventos y $last_id.
+ */
+function parse_controlz_format($path, $colour)
+{
+    global $eventos, $last_id;
+    
+    $fai_str = file_get_contents($path, 'r');
+    $fai = json_decode($fai_str, true);
+    foreach ($fai as $ev) {
+        $start = to_scheduler_date($ev['fecha']);
+        if ($start) {
+            $eventos[] = [
+                'id' => $last_id,
+                'text' => "Entrevista a " . $ev['entrevistade'] . ": " .
+                    $ev['tema'],
+                'start_date' => $start,
+                'end_date' => $start,
+                'color' => $colour,
+                'textColor' => 'white'
+            ];
+        } else {
+            echo "Error: element without date: $last_id ("
+                . $ev['entrevistade'] . "). Skipping it.\n";
+        }
+        
+        $last_id += 1;        
+    }
+}
+
+/**
+Agregar eventos directamente.
+
+El formato del JSON es el miso que utiliza dhtmlx-calendar.
+
+@param $path String El path del archivo a parsear.
+
+@return No hay retorno. Solo side-effect en $eventos y $last_id.
+ */
+function add_events($path)
+{
+    global $eventos, $last_id;
+    
+    $nuevos_str = file_get_contents($path, 'r');
+    $nuevos = json_decode($nuevos_str, true);
+    
+    foreach ($nuevos as $ev) {
+        $ev['id'] = $last_id;
+        $eventos[] = $ev;
+        
+        $last_id += 1;
+    }
+}
+
+echo "Parsing radio.json...\n";
+add_events('www/data/radio.json');
+
+// Agregar Control Z
+echo "Parsing entrevistas.json... \n";
+// parse_controlz_format('www/data/entrevistas.json', 'green');
+parse_controlz_format('https://controlz.fi.uncoma.edu.ar/datos/entrevistas.json', 'green');
 
 // Anexar fai.json
 echo "Parsing fai.json...\n";
