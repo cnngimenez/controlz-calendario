@@ -1,0 +1,212 @@
+#+property: header-args:elisp :tangle "controlz.el" :mkdirp yes :results silent :comments link
+
+Este archivo describe la biblioteca controlz.el para Emacs. Su objetivo es descargar el calendario, procesarlo y generar un buffer con los eventos. El buffer está pensado para funcionar con Org-mode.
+
+Para usarlo, cargar controlz.el en Emacs y ejecutar =M-x controlz-import-calendar-to-buffer= para descargar los archivos JSON, convertirlos a Org-mode y mostrar el buffer con los resultados.
+
+Se encuentran disponibles las siguientes versiones: [[file:emacs.org][Org-file]], HTML y [[file:controlz.el][controlz.el (tangled)]].
+
+* Header y Licencia
+Esta obra se encuentra bajo la licencia General Public License versión 3. 
+
+#+BEGIN_SRC elisp :comments nil
+  ;;; controlz.el --- Download Control Z calendar -*- lexical-binding: t; -*-
+
+  ;; Copyright 2023 cnngimenez
+  ;;
+  ;; Author: cnngimenez
+  ;; Maintainer: cnngimenez
+  ;; Version: 0.1.0
+  ;; Keywords: news
+  ;; URL: https://github.com/cnngimenez/controlz-calendario
+  ;; Package-Requires: ((emacs "27.1"))
+
+  ;; This program is free software: you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+  ;;; Commentary:
+  ;; Funciones para descargar e importar a Emacs (Org-Mode) el calendario de
+  ;; Control Z.
+
+  ;;; Code:
+#+END_SRC
+
+* Requires
+#+BEGIN_SRC elisp
+  (require 'url-handlers)
+#+END_SRC
+
+
+* Constantes
+
+** controlz-url-calendario                                        :constant:
+
+#+BEGIN_SRC elisp
+  (defconst controlz-url-calendario
+    "https://controlz.fi.uncoma.edu.ar/calendario/data/eventos.json"
+    "URL a conectarse para descargar los eventos del calendario.")
+#+END_SRC
+
+* Importar en Emacs
+
+** controlz-download-events                                        :function:
+#+BEGIN_SRC elisp
+  (defun controlz-download-events ()
+    "Descargar eventos desde la página Web.
+  Retornar el JSON parseado en un alist."
+    (with-temp-buffer
+      (url-insert-file-contents-literally controlz-url-calendario)
+      (goto-char (point-min))
+      (json-parse-buffer :object-type 'alist)))
+#+END_SRC
+
+** controlz-create-org-entry-from-event                            :function:
+Debe existir una función para procesar un JSON y obtener el string a insertar. Por consecuencia, esta función retorna dicho string, y considera que:
+
+- [X] si la fecha de inicio y fin es la misma, solo utiliza un timestamp,
+- [ ] si hay una clave =rec_type= (evento con repetición), agregar la repetición en el timestamp.
+
+#+BEGIN_SRC elisp
+  (defun controlz-create-org-entry-from-event (json-event)
+    "Crear una entrada Org-mode desde un evento.
+  Crear un string con una entrada Org-mode producida desde el JSON.
+  JSON-EVENT es un alist parseada desde el JSON de la página."
+    (let ((start (alist-get 'start_date json-event))
+          (end (alist-get 'end_date json-event)))
+      (if (string= start end)
+          (format "\n* %s    :%s:\n    <%s>\n"
+                  (alist-get 'text json-event)
+                  (alist-get 'type json-event)
+                  start)
+        (format "\n* %s    :%s:\n    <%s>--<%s>\n"
+                (alist-get 'text json-event)
+                (alist-get 'type json-event)
+                start end))))
+#+END_SRC
+
+** controlz-insert-org-from-events                                 :function:
+#+BEGIN_SRC elisp
+  (defun controlz-insert-org-from-events (json-events)
+    "Insert org entries per event in the current buffer.
+  JSON-EVENTS es un array con el parseo del JSON del calendario.
+  Utilizar `controlz-download-events'."
+    (mapc (lambda (event)
+            (insert (controlz-create-org-entry-from-event event)))
+          json-events))
+#+END_SRC
+
+** controlz-import-calendar-to-file                   :function:interactive:
+Básicamente, utiliza las funciones anteriores para descargar, procesar y mostrar los resultados.
+
+#+BEGIN_SRC elisp
+  (defun controlz-import-calendar-to-buffer ()
+    "Download the calendar and save the events in a buffer."
+    (interactive)
+    (with-current-buffer (get-buffer-create "Control Z - Calendar")
+      (org-mode)
+      (controlz-insert-org-from-events (controlz-download-events))
+      (switch-to-buffer-other-window (current-buffer))))
+#+END_SRC
+
+* Footer
+#+BEGIN_SRC elisp :comments nil
+  (provide 'controlz)
+  ;;; controlz.el ends here
+#+END_SRC
+
+
+* Meta     :noexport:
+
+# ----------------------------------------------------------------------
+#+TITLE:  Importar Agenda a Emacs
+#+SUBTITLE:
+#+AUTHOR: Christian Gimenez
+#+DATE:   03 jul 2023
+#+EMAIL:
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+COLUMNS: %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM
+
+#+STARTUP: inlineimages hidestars content hideblocks entitiespretty
+#+STARTUP: indent fninline latexpreview
+
+#+OPTIONS: H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+OPTIONS: tex:imagemagick
+
+#+TODO: TODO(t!) CURRENT(c!) PAUSED(p!) | DONE(d!) CANCELED(C!@)
+
+# -- Export
+#+LANGUAGE: es
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+# #+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+# #+export_file_name: index
+
+# -- HTML Export
+#+INFOJS_OPT: view:info toc:t ftoc:t ltoc:t mouse:underline buttons:t path:libs/org-info.js
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
+#+XSLT:
+
+# -- For ox-twbs or HTML Export
+# #+HTML_HEAD: <link href="libs/bootstrap.min.css" rel="stylesheet">
+# -- -- LaTeX-CSS
+# #+HTML_HEAD: <link href="css/style-org.css" rel="stylesheet">
+
+# #+HTML_HEAD: <script src="libs/jquery.min.js"></script> 
+# #+HTML_HEAD: <script src="libs/bootstrap.min.js"></script>
+
+
+# -- LaTeX Export
+# #+LATEX_CLASS: article
+#+latex_compiler: xelatex
+# #+latex_class_options: [12pt, twoside]
+
+#+latex_header: \usepackage{csquotes}
+# #+latex_header: \usepackage[spanish]{babel}
+# #+latex_header: \usepackage[margin=2cm]{geometry}
+# #+latex_header: \usepackage{fontspec}
+# -- biblatex
+#+latex_header: \usepackage[backend=biber, style=alphabetic, backref=true]{biblatex}
+#+latex_header: \addbibresource{tangled/biblio.bib}
+# -- -- Tikz
+# #+LATEX_HEADER: \usepackage{tikz}
+# #+LATEX_HEADER: \usetikzlibrary{arrows.meta}
+# #+LATEX_HEADER: \usetikzlibrary{decorations}
+# #+LATEX_HEADER: \usetikzlibrary{decorations.pathmorphing}
+# #+LATEX_HEADER: \usetikzlibrary{shapes.geometric}
+# #+LATEX_HEADER: \usetikzlibrary{shapes.symbols}
+# #+LATEX_HEADER: \usetikzlibrary{positioning}
+# #+LATEX_HEADER: \usetikzlibrary{trees}
+
+# #+LATEX_HEADER_EXTRA:
+
+# --  Info Export
+#+TEXINFO_DIR_CATEGORY: A category
+#+TEXINFO_DIR_TITLE: Importar Agenda a Emacs: (emacs)
+#+TEXINFO_DIR_DESC: One line description.
+#+TEXINFO_PRINTED_TITLE: Importar Agenda a Emacs
+#+TEXINFO_FILENAME: emacs.info
+
+
+# Local Variables:
+# org-hide-emphasis-markers: t
+# org-use-sub-superscripts: "{}"
+# fill-column: 80
+# visual-line-fringe-indicators: t
+# ispell-local-dictionary: "british"
+# org-latex-default-figure-position: "tbp"
+# End:
