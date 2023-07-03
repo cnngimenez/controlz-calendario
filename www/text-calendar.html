@@ -31,49 +31,51 @@
     </noscript>
 
     <main>
-      <h1>Calendario UNCo-FaI</h1>
+      <div class="container">
+        <h1>Calendario UNCo-FaI</h1>
 
-      <p>Filtros: </p>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-nacional" checked>
-        <label class="form-check-label" for="chk-nacional">
-          Mostrar eventos Nacionales
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-cs" checked>
-        <label class="form-check-label" for="chk-cs">
-          Mostrar eventos del Consejo Superior
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-fai" checked>
-        <label class="form-check-label" for="chk-fai">
-          Mostrar eventos de la Facultad de Informática
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-fai-periodos" checked>
-        <label class="form-check-label" for="chk-fai-periodos">
-          Mostrar periodos de la FaI
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-radio" checked>
-        <label class="form-check-label" for="chk-radio">
-          Radio
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="chk-controlz" checked>
-        <label class="form-check-label" for="chk-controlz">
-          Entrevistas realizadas en Control Z
-        </label>
-      </div>
+        <p>Filtros: </p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-nacional" checked>
+          <label class="form-check-label" for="chk-nacional">
+            Mostrar eventos Nacionales
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-cs" checked>
+          <label class="form-check-label" for="chk-cs">
+            Mostrar eventos del Consejo Superior
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-fai" checked>
+          <label class="form-check-label" for="chk-fai">
+            Mostrar eventos de la Facultad de Informática
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-fai-periodos" checked>
+          <label class="form-check-label" for="chk-fai-periodos">
+            Mostrar periodos de la FaI
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-radio" checked>
+          <label class="form-check-label" for="chk-radio">
+            Radio
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="chk-controlz" checked>
+          <label class="form-check-label" for="chk-controlz">
+            Entrevistas realizadas en Control Z
+          </label>
+        </div>
 
-      <div id="agenda">
-      </div>      
-      
+        <div id="agenda">
+        </div>
+        
+      </div>
     </main>
     <footer>
       <div class="container">
@@ -94,10 +96,21 @@
         </p>
       </div>
     </footer>
+
+    <template id="tmp-evento">
+      <div class="evento">
+        <span class="evento-tipo">Tipo</span>:
+        Desde
+        <span class="evento-start-date">Start date</span>
+        hasta
+        <span class="evento-end-date">End date</span>.
+        <span class="evento-text">Text</span>
+      </div>
+    </template>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>
-    <script src="js/index.js"></script>
+    <script src="js/text-calendar.js"></script>
   </body>
 </html>
