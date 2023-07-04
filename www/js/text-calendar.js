@@ -54,7 +54,10 @@ function parse_dates(json) {
     return json.map( (evento) => {
         evento.start_date = new Date(evento.start_date);
         evento.end_date = new Date(evento.end_date);
-
+        // Corrigiendo 24h. JS interpreta el string como un día antes.
+        evento.start_date.setTime(evento.start_date.getTime() + 86400000)
+        evento.end_date.setTime(evento.end_date.getTime() + 86400000)
+        
         return evento;
     });
 }
