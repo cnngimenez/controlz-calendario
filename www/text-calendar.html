@@ -72,6 +72,8 @@
           </label>
         </div>
 
+        <h1>Agenda</h1>
+        
         <div id="agenda">
         </div>
         
@@ -99,12 +101,20 @@
 
     <template id="tmp-evento">
       <div class="evento">
-        <span class="evento-tipo">Tipo</span>:
-        Desde
-        <span class="evento-start-date">Start date</span>
-        hasta
-        <span class="evento-end-date">End date</span>.
-        <span class="evento-text">Text</span>
+        <div class="row">
+          <div class="col col-lg-2">
+            <span class="evento-tipo">Tipo</span>:              
+          </div>
+          <div class="col">
+            Desde
+            <span class="evento-start-date">Start date</span>
+            hasta
+            <span class="evento-end-date">End date</span>.
+          </div>
+          <div class="col">
+            <span class="evento-text">Text</span>
+          </div>
+        </div>
       </div>
     </template>
     
