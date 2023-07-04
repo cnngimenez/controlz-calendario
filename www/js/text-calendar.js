@@ -19,7 +19,36 @@
 
 var mostrar_tipos = {};
 var eventos = [];
-var fecha_actual = new Date();
+var fecha_actual_desde = new Date();
+var fecha_actual_hasta = new Date();
+
+/**
+ Asignar la fecha de hoy a fecha_actual_desde.
+ */
+function fecha_actual_hoy() {
+    fecha_actual_desde = new Date();
+    fecha_actual_desde.setHours(0);
+    fecha_actual_desde.setMinutes(0);
+    fecha_actual_desde.setSeconds(0);
+    
+    fecha_actual_hasta = new Date();
+    fecha_actual_hasta.setHours(23);
+    fecha_actual_hasta.setMinutes(59);
+    fecha_actual_hasta.setSeconds(59);
+}
+
+function fecha_actual_siguiente() {
+    // 86400000 = 1000*60*60*24
+    fecha_actual_desde.setTime(fecha_actual_desde.getTime() + 86400000);
+    fecha_actual_hasta.setTime(fecha_actual_hasta.getTime() + 86400000);
+}
+
+function fecha_actual_anterior() {
+    // 86400000 = 1000*60*60*24
+    fecha_actual_desde.setTime(fecha_actual_desde.getTime() - 86400000);
+    fecha_actual_hasta.setTime(fecha_actual_hasta.getTime() - 86400000);
+    
+}
 
 function parse_dates(json) {
     return json.map( (evento) => {
@@ -46,6 +75,10 @@ function clonar_template(id) {
 
 /**
  Convertir un evento a un elemento HMTL.
+
+ @param evento Un objeto JSON con los datos del evento.
+ 
+ @return Un HTMLElement div.
  */
 function evento_to_elt(evento) {
     let div = clonar_template('tmp-evento');    
@@ -60,10 +93,15 @@ function evento_to_elt(evento) {
     return div;
 }
 
-function filtrar_eventos_hoy() {
+function filtrar_eventos_hoy() {    
     return eventos.filter( (evento) => {
-        return mostrar_tipos[evento.type] && evento.start_date <= fecha_actual &&
-            fecha_actual <= evento.end_date;
+        if (evento.start_date >= evento.end_date) {            
+            return mostrar_tipos[evento.type] && fecha_actual_desde <=evento.start_date &&
+                evento.start_date <= fecha_actual_hasta;
+        } else {
+            return mostrar_tipos[evento.type] && evento.start_date <= fecha_actual_desde &&
+                fecha_actual_hasta <= evento.end_date;
+        }
     });
 }
 
@@ -94,12 +132,30 @@ function actualizar_mostrar_tipos(){
 
 function actualizar_agenda() {
     var eventos_hoy = filtrar_eventos_hoy();
+    let elt_fecha = document.querySelector('div#fecha-actual');
     let elt = document.querySelector('div#agenda');
+
+    elt_fecha.innerText = 'Mostrando eventos de la fecha: ' + fecha_actual_desde.toLocaleString();
     
     elt.innerHTML = '';    
     eventos_hoy.forEach( (evento) => {
         elt.append(evento_to_elt(evento));
     });
+}
+
+function on_btn_hoy_clicked(event) {
+    fecha_actual_hoy();
+    actualizar_agenda();
+}
+
+function on_btn_anterior_clicked(event) {
+    fecha_actual_anterior();
+    actualizar_agenda();
+}
+
+function on_btn_siguiente_clicked(event) {
+    fecha_actual_siguiente();
+    actualizar_agenda();
 }
 
 function on_chk_clicked(event) {
@@ -120,10 +176,18 @@ function asignar_handlers() {
     chk.addEventListener('click', on_chk_clicked);
     chk = document.getElementById('chk-controlz');
     chk.addEventListener('click', on_chk_clicked);
+
+    var btn = document.querySelector('button#btn-hoy');
+    btn.addEventListener('click', on_btn_hoy_clicked);
+    btn = document.querySelector('button#btn-siguiente');
+    btn.addEventListener('click', on_btn_siguiente_clicked);
+    btn = document.querySelector('button#btn-anterior');
+    btn.addEventListener('click', on_btn_anterior_clicked);
 }
 
 function startup() {
     actualizar_mostrar_tipos();
+    fecha_actual_hoy();
     obtener_datos(actualizar_agenda);
     asignar_handlers();
 }

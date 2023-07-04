@@ -74,6 +74,39 @@
 
         <h1>Agenda</h1>
         
+        <div class="row">
+          <div class="col col-lg-3">
+            <div class="btn-group my-2" role="group" aria-label="Rango a mostrar en la agenda.">
+              <input type="radio" class="btn-check" name="btnradio" id="btn-diario"
+                     autocomplete="off" checked>
+              <label class="btn btn-outline-primary" for="btnradio1">Diario</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btn-semanal"
+                     autocomplete="off">
+              <label class="btn btn-outline-primary" for="btnradio2">Semanal</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btn-mensual"
+                     autocomplete="off">
+              <label class="btn btn-outline-primary" for="btnradio3">Mensual</label>
+            </div>
+          </div>
+          <div class="col">
+            <div id="fecha-actual"></div>
+          </div>
+          <div class="col col-lg-2">
+            <div class="btn-group me-2" role="group" aria-label="Saltar a fecha.">
+              <button type="button" class="btn btn-secondary"
+                      id="btn-anterior"
+                      aria-label="Anterior">&lt;</button>
+              <button type="button" class="btn btn-secondary"
+                      id="btn-hoy">Hoy</button>
+              <button type="button" class="btn btn-secondary"
+                      id="btn-siguiente"
+                      aria-label="Siguiente">&gt;</button>
+            </div>
+          </div>
+        </div>
+
         <div id="agenda">
         </div>
         

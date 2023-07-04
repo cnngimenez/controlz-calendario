@@ -16,3 +16,6 @@
     padding-right: 5px;
                   
 }
+.fecha-actual {
+    display: inline-block;
+}
