@@ -49,9 +49,11 @@ function clonar_template(id) {
 function evento_to_elt(evento) {
     let div = clonar_template('tmp-evento');    
 
+    div.querySelector('.evento-tipo').style.backgroundColor = evento.color;
+    div.querySelector('.evento-tipo').style.color = evento.textColor;
     div.querySelector('.evento-tipo').innerText = evento.type;
-    div.querySelector('.evento-start-date').innerText = evento.start_date;
-    div.querySelector('.evento-end-date').innerText = evento.end_date;
+    div.querySelector('.evento-start-date').innerText = evento.start_date.toLocaleString();
+    div.querySelector('.evento-end-date').innerText = evento.end_date.toLocaleString();
     div.querySelector('.evento-text').innerText = evento.text;
         
     return div;
